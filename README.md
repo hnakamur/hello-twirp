@@ -48,3 +48,19 @@ $ go run cmd/client/main.go -server http://127.0.0.1:9999 -subject poo
 2018/01/17 09:15:35 twirp error invalid_argument: Subject must not be poo
 exit status 1
 ```
+
+Run curl for a normal case.
+
+```
+$ curl -sS -X POST -H 'Content-Type: application/json' -d '{"subject":"World"}' \
+    http://127.0.0.1:9999/twirp/com.github.hnakamur.hello_twirp.HelloWorld/Hello
+{"text":"Hello World"}
+```
+
+Run curl for an error case.
+
+```
+$ curl -sS -X POST -H 'Content-Type: application/json' -d '{"subject":"poo"}' \
+    http://127.0.0.1:9999/twirp/com.github.hnakamur.hello_twirp.HelloWorld/Hello
+{"code":"invalid_argument","msg":"Subject must not be poo","meta":{"argument":"Subject"}}
+```
